@@ -1,0 +1,25 @@
+#Docker compose yml file for my Domoticz service
+#https://docs.docker.com/compose/compose-file/compose-file-v3/
+#https://hub.docker.com/r/domoticz/domoticz
+
+version: '3.8'
+services:
+  domoticz:
+    image: domoticz/domoticz
+    container_name: domoticz
+    restart: unless-stopped
+    ports:
+      - "8443:8443"
+      - "8080:8080"
+    environment:
+      - TZ=Europe/Brussels
+      - WWW_PORT=8080
+      - SSL_PORT=443
+    volumes:
+      #will use a Docker volume named domoticz to store data that needs to be persisted across container restarts
+      #If the volume does not exist, it will create one when performing docker compose up
+      - type: volume
+        source: domoticz
+        target: /opt/domoticz/userdata
+volumes:
+  domoticz:
