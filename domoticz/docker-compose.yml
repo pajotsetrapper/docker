@@ -15,6 +15,8 @@ services:
       - TZ=Europe/Brussels
       - WWW_PORT=8080
       - SSL_PORT=443
+    devices:
+      - "/dev/serial/by-id/usb-1a86_USB2.0-Serial-if00-port0:/dev/ttyACM0" #Map serial port used for RFLink433Mhz device
     volumes:
       #will use a Docker volume named domoticz to store data that needs to be persisted across container restarts
       #If the volume does not exist, it will create one when performing docker compose up
