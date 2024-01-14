@@ -5,10 +5,16 @@ services:
     container_name: mpd
     restart: unless-stopped
     volumes:
-      - /var/lib/mpd/db:/db
-      - /var/lib/mpd/music:/music
-      - /var/lib/mpd/playlists:/playlists
-      - /var/lib/mpd/log:/log
+      - /home/pieter/Music:/music
+      - type: volume
+        source: mpd-db
+        target: /db
+      - type: volume
+        source: mpd-playlists
+        target: /playlists
+      - type: volume
+        source: mpd-log
+        target: /log
       #- /var/lib/mpd/mpd.conf:/etc/mpd.conf
       - /etc/localtime:/etc/localtime:ro
     environment:
@@ -26,4 +32,7 @@ services:
       - "8001:8001"
     devices:
       - /dev/snd
-
+volumes:
+  mpd-db:
+  mpd-playlists:
+  mpd-log:
