@@ -18,14 +18,31 @@ services:
       #- /var/lib/mpd/mpd.conf:/etc/mpd.conf
       - /etc/localtime:/etc/localtime:ro
     environment:
+      #Do NOT enable replaygain, volume normalisation, 
+      #as that would break bit-perfect audio
       - USER_MODE=y
       - PUID=1000
       - PGID=1000
       - AUDIO_GID=29 #getent group audio > audio:x:29:pulse
       - MPD_ENABLE_LOGGING=yes
-      - MPD_LOG_LEVEL=verbose
+      - MPD_LOG_LEVEL=default
       - FORCE_REPO_BINARY=yes
       - TZ=Europe/Brussels
+      # Configure ALSA output for USB-DAC, bit-perfect audio
+      # DAC Specs
+      #- 'USB Audio' Digital USB Audio Class audio output on device CA - CA CXA81 2.0
+      #- hardware address: hw:1,0 (or hw:C20,0)
+      #- sample rates per format:       
+      #   - S32_LE: 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000, 705600
+      #   - S16_LE: 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000, 705600
+      #   - SPECIAL: 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000, 705600
+      #-usb audio class: UAC2 (isochronous asynchronous)
+      - ALSA_OUTPUT_CREATE=yes
+      - ALSA_OUTPUT_ENABLED=yes
+      - ALSA_OUTPUT_NAME=Cambridge Audio CXA-81 USB-DAC
+      - ALSA_OUTPUT_DEVICE=hw:C20
+      - ALSA_OUTPUT_MIXER_TYPE=none
+      - ALSA_OUTPUT_AUTO_RESAMPLE=no
     ports:
       - "6600:6600"
       - "8000:8000"
