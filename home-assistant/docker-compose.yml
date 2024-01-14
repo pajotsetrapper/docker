@@ -1,0 +1,16 @@
+version: '3'
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - type: volume
+        source: homeassistant
+        target: /config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: false
+    network_mode: host
+volumes:
+  homeassistant: 
