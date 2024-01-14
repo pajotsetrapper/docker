@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  mpd:
+    image: giof71/mpd-alsa
+    container_name: mpd
+    restart: unless-stopped
+    volumes:
+      - /var/lib/mpd/db:/db
+      - /var/lib/mpd/music:/music
+      - /var/lib/mpd/playlists:/playlists
+      - /var/lib/mpd/log:/log
+      #- /var/lib/mpd/mpd.conf:/etc/mpd.conf
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - USER_MODE=y
+      - PUID=1000
+      - PGID=1000
+      - AUDIO_GID=29 #getent group audio > audio:x:29:pulse
+      - MPD_ENABLE_LOGGING=yes
+      - MPD_LOG_LEVEL=verbose
+      - FORCE_REPO_BINARY=yes
+      - TZ=Europe/Brussels
+    ports:
+      - "6600:6600"
+      - "8000:8000"
+      - "8001:8001"
+    devices:
+      - /dev/snd
+
