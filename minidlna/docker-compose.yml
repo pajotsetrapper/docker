@@ -2,7 +2,7 @@ version: '3'
 services:
   minidlna:
     image: vladgh/minidlna
-    container_name: mpd
+    container_name: minidlna 
     restart: unless-stopped
     environment:
       MINIDLNA_MEDIA_DIR_1=A,: /media/music
