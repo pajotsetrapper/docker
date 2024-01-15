@@ -1,5 +1,32 @@
 version: '3.8'
 services:
+
+  ampd:
+    image: rain0r/ampd
+    container_name: ampd
+    ports:
+      - "8888:8080"
+    depends_on:
+      - mpd
+    environment:
+      #See https://github.com/rain0r/ampd/blob/master/src/main/resources/application.properties for all options
+      - MPD_HOST=mpd
+      - MPD_SERVER=mpd
+      - MPD_PORT=6600
+      - MPD_MUSIC_DIRECTORY=/media #Used for getting album covers
+      - LOCAL_COVER_CACHE=true
+      - MB_COVER_SERVICE=true
+      - ARTWORK_FILENAME_PATTERN=**.{jpg,jpeg,png}
+      - DELETE_EXISTING_PLAYLISTS=false
+      - ALBUMS_PAGE_SIZE=64
+    volumes:
+      - /home/pieter/Music:/media
+      - type: volume
+        source: ampd-cover-cache
+        target: /root/.local/share/ampd
+    networks:
+      - mpd-network
+
   mpd:
     image: giof71/mpd-alsa
     container_name: mpd
@@ -18,7 +45,7 @@ services:
       #- /var/lib/mpd/mpd.conf:/etc/mpd.conf
       - /etc/localtime:/etc/localtime:ro
     environment:
-      #Do NOT enable replaygain, volume normalisation, 
+      #Do NOT enable replaygain, volume normalisation,
       #as that would break bit-perfect audio
       - USER_MODE=y
       - PUID=1000
@@ -32,7 +59,7 @@ services:
       # DAC Specs
       #- 'USB Audio' Digital USB Audio Class audio output on device CA - CA CXA81 2.0
       #- hardware address: hw:1,0 (or hw:C20,0)
-      #- sample rates per format:       
+      #- sample rates per format:
       #   - S32_LE: 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000, 705600
       #   - S16_LE: 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000, 705600
       #   - SPECIAL: 44100, 48000, 88200, 96000, 176400, 192000, 352800, 384000, 705600
@@ -45,11 +72,19 @@ services:
       - ALSA_OUTPUT_AUTO_RESAMPLE=no
     ports:
       - "6600:6600"
-      - "8000:8000"
-      - "8001:8001"
+      #- "8000:8000"
+      #- "8001:8001"
     devices:
       - /dev/snd
+    networks:
+      - mpd-network
+
 volumes:
   mpd-db:
   mpd-playlists:
   mpd-log:
+  ampd-cover-cache:
+
+networks:
+  mpd-network:
+    driver: bridge
