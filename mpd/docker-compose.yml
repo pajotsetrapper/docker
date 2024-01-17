@@ -1,13 +1,13 @@
 version: '3.8'
 services:
-
-  ampd:
+  ampd: #A webservice that acts as mpd client
     image: rain0r/ampd
     container_name: ampd
     ports:
       - "8888:8080"
     depends_on:
       - mpd
+    restart: unless-stopped
     environment:
       #See https://github.com/rain0r/ampd/blob/master/src/main/resources/application.properties for all options
       - MPD_HOST=mpd
@@ -24,6 +24,24 @@ services:
       - type: volume
         source: ampd-cover-cache
         target: /root/.local/share/ampd
+    networks:
+      - mpd-network
+
+  rompr: #A webservice that acts as mpd client
+    image: rawdlite/rompr
+    container_name: rompr
+    ports:
+      - "8889:80"
+    depends_on:
+      - mpd
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: rompr-prefs
+        target: /app/rompr/prefs
+      - type: volume
+        source: rompr-albumart
+        target: /app/rompr/albumart
     networks:
       - mpd-network
 
@@ -84,6 +102,8 @@ volumes:
   mpd-playlists:
   mpd-log:
   ampd-cover-cache:
+  rompr-prefs:
+  rompr-albumart:
 
 networks:
   mpd-network:
