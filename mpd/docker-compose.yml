@@ -1,34 +1,8 @@
 version: '3.8'
 services:
-  ampd: #A webservice that acts as mpd client
-    image: rain0r/ampd
-    container_name: ampd
-    ports:
-      - "8888:8080"
-    depends_on:
-      - mpd
-    restart: unless-stopped
-    environment:
-      #See https://github.com/rain0r/ampd/blob/master/src/main/resources/application.properties for all options
-      - MPD_HOST=mpd
-      - MPD_SERVER=mpd
-      - MPD_PORT=6600
-      - MPD_MUSIC_DIRECTORY=/media #Used for getting album covers
-      - LOCAL_COVER_CACHE=true
-      - MB_COVER_SERVICE=true
-      - ARTWORK_FILENAME_PATTERN=**.{jpg,jpeg,png}
-      - DELETE_EXISTING_PLAYLISTS=false
-      - ALBUMS_PAGE_SIZE=64
-    volumes:
-      - /home/pieter/Music:/media
-      - type: volume
-        source: ampd-cover-cache
-        target: /root/.local/share/ampd
-    networks:
-      - mpd-network
 
   rompr: #A webservice that acts as mpd client
-    image: rawdlite/rompr
+    image: chrll/rompr
     container_name: rompr
     ports:
       - "8889:80"
@@ -101,7 +75,6 @@ volumes:
   mpd-db:
   mpd-playlists:
   mpd-log:
-  ampd-cover-cache:
   rompr-prefs:
   rompr-albumart:
 
