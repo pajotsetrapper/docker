@@ -2,7 +2,7 @@ version: '3'
 services:
   homeassistant:
     container_name: homeassistant
-    image: "ghcr.io/home-assistant/home-assistant:stable"
+    image: "homeassistant/home-assistant"
     volumes:
       - type: volume
         source: homeassistant
@@ -13,4 +13,4 @@ services:
     privileged: false
     network_mode: host
 volumes:
-  homeassistant: 
+  homeassistant:
