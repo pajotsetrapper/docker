@@ -5,7 +5,7 @@ Config file & black passwd file are in the config subfolder.
 After starting the container (sudo docker compose up -d), you need to add credentials for a user that can be used to register / publish updates (authentication).
 To do so, connect to the Docker container and run:
 
-# connect to the docker image & add credentials (will be stored in /mosquitto/config/passwd, which is mapped to the local volume)
+connect to the docker image & add credentials (will be stored in /mosquitto/config/passwd, which is mapped to the local volume)
 
 mosquitto_passwd -b /mosquitto/config/passwd guest guest 
 Warning: File /mosquitto/config/passwd has world readable permissions. Future versions will refuse to load this file.
