@@ -13,5 +13,5 @@ It is currently configured to
 ## Starting & preparing the container:
 - run `sudo docker compose up -d`
 - connect to the docker container console: `docker exec -it <mycontainer> sh`
--- add credentials to be used for subscribing / publishing event `mosquitto_passwd -b /mosquitto/config/passwd guest guest` > guest / guest being the username/password here. This will update /mosquitto/config/passwd.
--- update the permissions on /mosquitto/config/passwd: `chown root /mosquitto/config/passwd && chmod 0700 /mosquitto/config/passwd`
+- add credentials to be used for subscribing / publishing event `mosquitto_passwd -b /mosquitto/config/passwd guest guest` > guest / guest being the username/password here. This will update /mosquitto/config/passwd.
+- update the permissions on /mosquitto/config/passwd: `chown root /mosquitto/config/passwd && chmod 0700 /mosquitto/config/passwd`
