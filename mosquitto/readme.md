@@ -20,5 +20,5 @@ It is currently configured to
 ## Testing
 
 To see if the service runs file, subscribe to a topic with one client & publish to the topic with another (e.g. use 2 consoles):
-- Subscribe to the topic with authentication: `sudo docker exec mosquitto mosquitto_sub -u guest -P guest -v -t 'home/livingroom/humidity'`
-- Publish to the topic with authentication: `sudo docker exec mosquitto mosquitto_pub -u guest -P guest  -t 'home/livingroom/humidity' -m '42'`
+- Subscribe to the topic with authentication: `sudo docker exec <mycontainer> mosquitto_sub -u guest -P guest -v -t 'home/livingroom/humidity'`
+- Publish to the topic with authentication: `sudo docker exec <mycontainer> mosquitto_pub -u guest -P guest  -t 'home/livingroom/humidity' -m '42'`
