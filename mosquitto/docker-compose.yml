@@ -1,20 +1,22 @@
-version: "3"
+version: "3.7"
 services:
   mosquitto:
     container_name: mosquitto
-    image: eclipse-mosquitto
+    image: eclipse-mosquitto:latest
     ports:
-      - 1883:1883
+      - "1883:1883"
+      - "9001:9001"
     volumes:
       - type: volume
         source: mosquitto-data
         target: /mosquitto/data
-      - type: volume
-        source: mosquitto-conf
+      - type: bind
+        source: ./config
         target: /mosquitto/config
       - type: volume
         source: mosquitto-log
         target: /mosquitto/log
+    restart: unless-stopped
 volumes:
   mosquitto-data:
   mosquitto-conf:
