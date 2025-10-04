@@ -2,11 +2,16 @@ version: '3'
 services:
   minidlna:
     image: vladgh/minidlna
-    container_name: minidlna 
+    container_name: minidlna
     restart: unless-stopped
     environment:
       MINIDLNA_MEDIA_DIR_1=A,: /media/music
+      MINIDLNA_MEDIA_DIR_2=V,: /media/pixel/Speelfilms
+      MINIDLNA_MEDIA_DIR_3=V,: /media/pixel/Series
+      MINIDLNA_MEDIA_DIR_4=V,: /media/pixel/Kinderfilms/films
+      MINIDLNA_MEDIA_DIR_5=V,: /media/pixel/Kinderfilms/series
       MINIDLNA_FRIENDLY_NAME: SuperTux
     volumes:
       - /home/pieter/Music:/media/music
+      - /mnt/pixel:/media/pixel
     network_mode: host
