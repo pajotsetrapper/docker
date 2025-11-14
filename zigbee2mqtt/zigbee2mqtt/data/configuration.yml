@@ -1,0 +1,21 @@
+homeassistant: true
+permit_join: true
+mqtt:
+  base_topic: zigbee2mqtt
+  server: mqtt://192.168.2.30:1883
+  user: guest # optional, if you set auth
+  password: guest # optional
+
+serial:
+  port: tcp://10.30.1.80:6638 # replace with your MR2’s IP
+  baudrate: 115200
+  adapter: ember
+  # Disable green led?
+  disable_led: false
+
+frontend:
+  port: 8080
+ 
+# Set output power to max 20
+advanced:
+  transmit_power: 20
