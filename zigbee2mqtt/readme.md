@@ -17,5 +17,5 @@ What permit_join: false Does
 - mosquitto_pub -t 'zigbee2mqtt/bridge/request/permit_join' -m '{"value":false}'
 
 
-The service will listen on port 8090.
+The service will listen on port 8090. Navigate to that port to further configure Zigbee2Mqtt
 https://www.freecodecamp.org/news/how-to-set-up-zigbee2mqtt-with-docker
